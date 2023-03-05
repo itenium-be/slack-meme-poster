@@ -1,0 +1,15 @@
+{
+  "name": "slack-meme-poster",
+  "version": "0.9.0",
+  "description": "Post a random meme on Slack every x",
+  "type": "module",
+  "scripts": {
+    "start": "node slack-meme.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.0"
+  }
+}
