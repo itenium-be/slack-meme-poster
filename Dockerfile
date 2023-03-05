@@ -5,8 +5,7 @@ RUN apk add --update --no-cache bash dos2unix
 WORKDIR /usr/scheduler
 
 COPY job/*.* ./job/
-COPY crontab.txt ./
-COPY start.sh .
+COPY crontab.txt start.sh ./
 
 RUN dos2unix crontab.txt start.sh job/*.*
 

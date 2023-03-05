@@ -1,11 +1,12 @@
 import fetch from 'node-fetch'
-import dotenv from 'dotenv'
 
-dotenv.config()
 const webhookUrl = process.env.SLACK_WEBHOOK
+// console.log(`Using webhook: ${webhookUrl}`)
 
 // Configure your message via
 // https://app.slack.com/block-kit-builder/
+
+console.log('About to post a meme!')
 
 await fetch(webhookUrl, {
   method: 'POST',
@@ -22,11 +23,11 @@ await fetch(webhookUrl, {
         type: 'image',
         title: {
           type: 'plain_text',
-          text: 'Kittens',
+          text: 'Kitten',
           emoji: true
         },
         image_url: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
-        alt_text: 'Cute cats'
+        alt_text: 'Cute cat'
       }
     ]
   }),
