@@ -1,15 +1,21 @@
 import fetch from 'node-fetch'
 
+const currentDayName = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()
+const messageToPostWithMeme = `It's ${currentDayName} my boys! :smile:`
+
+
 const webhookUrl = process.env.SLACK_WEBHOOK
 // console.log(`Using webhook: ${webhookUrl}`)
+
 
 // Configure your message via
 // https://app.slack.com/block-kit-builder/
 
+
 export async function postMeme(imageUrl) {
   const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
-
   console.log('About to post meme:', fileName)
+
   await fetch(webhookUrl, {
     method: 'POST',
     body: JSON.stringify({
@@ -18,14 +24,14 @@ export async function postMeme(imageUrl) {
           type: 'header',
           text: {
             type: 'plain_text',
-            text: "It's friday my boys! :smile:"
+            text: messageToPostWithMeme
           }
         },
         {
           type: 'image',
           title: {
             type: 'plain_text',
-            text: 'fileName',
+            text: fileName,
             emoji: true
           },
           // image_url: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',

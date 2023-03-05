@@ -1,1 +1,0 @@
-0 16 * * fri node /usr/scheduler/job/slack-meme-poster.js
