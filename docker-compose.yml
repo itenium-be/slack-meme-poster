@@ -12,8 +12,10 @@ services:
     expose:
       - ${FILE_SERVER_PORT}
     environment:
-      CORS: true
-      DEBUG: false
+      CORS: 'true'
+      DEBUG: 'false'
+      SHOW_LISTING: 'false'
+      SHOW_INDEX: 'false'
 
   cron_job:
     container_name: slack-meme-job
@@ -22,5 +24,6 @@ services:
     restart: ${RESTART_POLICY}
     environment:
       SLACK_WEBHOOK: ${SLACK_WEBHOOK}
+      HOST_URL: ${HOST_URL}
     depends_on:
       - file_server

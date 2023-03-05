@@ -7,6 +7,8 @@ const webhookUrl = process.env.SLACK_WEBHOOK
 // https://app.slack.com/block-kit-builder/
 
 console.log('About to post a meme!')
+const imageUrl = process.env.HOST_URL + 'cat.jpg'
+console.log(imageUrl)
 
 await fetch(webhookUrl, {
   method: 'POST',
@@ -26,7 +28,8 @@ await fetch(webhookUrl, {
           text: 'Kitten',
           emoji: true
         },
-        image_url: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
+        // image_url: 'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
+        image_url: imageUrl,
         alt_text: 'Cute cat'
       }
     ]
