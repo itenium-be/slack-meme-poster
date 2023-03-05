@@ -15,6 +15,11 @@ docker-compose up --build -d
 ```
 
 
+With default settings, `server:4001/cat.jpg` should pop up!
+Or change permissions if you get Forbidden: `chmod -R 755 memes`
+
+
+
 Configuration
 -------------
 
