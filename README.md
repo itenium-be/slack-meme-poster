@@ -2,14 +2,9 @@ Random Slack Meme
 =================
 
 ```sh
-docker-compose up --build
+# Configure your webhook & 
+cp .env.sample .env
 
-
-docker build -t scheduler .
-
-# Debug
-docker run -it scheduler
-
-# Detached
-docker run -d scheduler
+# Schedule meme-posting!
+docker-compose up --build -d
 ```

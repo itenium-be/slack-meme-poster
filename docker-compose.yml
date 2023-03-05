@@ -13,17 +13,19 @@ services:
       - ${FILE_SERVER_PORT}
     environment:
       CORS: 'true'
-      DEBUG: 'false'
       SHOW_LISTING: 'false'
-      SHOW_INDEX: 'false'
+      DEBUG: 'false'
 
   cron_job:
     container_name: slack-meme-job
     image: slack-meme-job
     build: .
     restart: ${RESTART_POLICY}
+    volumes:
+      - ${MEMES_DIR}:/memes
     environment:
       SLACK_WEBHOOK: ${SLACK_WEBHOOK}
       HOST_URL: ${HOST_URL}
+      POST_MEME_ON_STARTUP: ${POST_MEME_ON_STARTUP}
     depends_on:
       - file_server

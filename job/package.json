@@ -4,7 +4,7 @@
   "description": "Post a random meme on Slack every x",
   "type": "module",
   "scripts": {
-    "start": "node slack-meme.js"
+    "start": "node slack-meme-poster.js"
   },
   "author": "",
   "license": "MIT",
