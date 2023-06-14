@@ -54,6 +54,16 @@ FILE_SERVER_PORT=4001
 ```
 
 
+### Permissions
+
+If you get a 403 Forbidden:
+
+```sh
+chmod -R 755 memes_folder
+```
+
+
+
 Output
 ------
 
