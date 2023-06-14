@@ -15,6 +15,7 @@ const webhookUrl = process.env.SLACK_WEBHOOK
 export async function postMeme(imageUrl) {
   const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
   console.log('About to post meme:', fileName)
+  console.log('Full url:', imageUrl);
 
   await fetch(webhookUrl, {
     method: 'POST',
