@@ -4,6 +4,15 @@ const currentDayName = new Date().toLocaleDateString('en-US', { weekday: 'long' 
 const messageToPostWithMeme = `${currentDayName} vibes, everyone! 😎`
 
 
+// Alternative messages:
+// Fri-nally, team! Hang in there for a little while longer! 🎉
+// Weekend vibes incoming, everyone! 😎"
+// "Counting down to the weekend, team! 🎉"
+// "Ready for some weekend fun, folks? Let's do this! 🚀"
+// "The weekend is on its way, squad! Get ready to unwind! 🌟"
+// "Anticipating the weekend adventures, all! Hang in there! 🏖️"
+
+
 const webhookUrl = process.env.SLACK_WEBHOOK
 // console.log(`Using webhook: ${webhookUrl}`)
 
