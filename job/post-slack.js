@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
-const currentDayName = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()
-const messageToPostWithMeme = `It's ${currentDayName} my dudes! :smile:`
+const currentDayName = new Date().toLocaleDateString('en-US', { weekday: 'long' })
+const messageToPostWithMeme = `${currentDayName} vibes, everyone! 😎`
 
 
 const webhookUrl = process.env.SLACK_WEBHOOK
