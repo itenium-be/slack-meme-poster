@@ -12,7 +12,7 @@ const webhookUrl = process.env.SLACK_WEBHOOK
 // https://app.slack.com/block-kit-builder/
 
 
-export async function postMeme(imageUrl) {
+export async function postSlackMeme(imageUrl) {
   const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
   console.log('About to post meme:', fileName)
   console.log('Full url:', imageUrl);

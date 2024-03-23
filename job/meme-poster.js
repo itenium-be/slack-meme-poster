@@ -1,4 +1,4 @@
-import { postMeme } from './post-meme.js'
+import { postSlackMeme } from './post-slack.js'
 import fs from 'fs'
 
 
@@ -13,4 +13,4 @@ console.log('Picked', theMeme)
 
 // Post the meme to Slack
 const memeUrl = process.env.HOST_URL + 'already-sent/' + theMeme
-await postMeme(memeUrl)
+await postSlackMeme(memeUrl)
