@@ -1,9 +1,13 @@
 Random Slack Meme
 =================
 
-Cron job to post a randomly selected meme (any picture really) to Slack through their webhook.  
+Node v20.
+
+Cron job to post a randomly selected meme (any picture really) to a messaging app.  
 Images are moved to `already-sent` to avoid duplicate posting.
 `halverneus/static-file-server` is used to publicly share the `memes` folder for Slack to download.
+
+Supported: Slack, Discord.
 
 
 ```sh
@@ -15,56 +19,22 @@ docker-compose up --build -d
 ```
 
 
-With default settings, `server:4001/cat.jpg` should pop up!
-Or change permissions if you get Forbidden: `chmod -R 755 memes`
+## Permissions
 
-
-
-Configuration
--------------
-
-Example `.env` config:
-
-```ini
-COMPOSE_PROJECT_NAME=slack-meme-poster
-
-# Options: no | on-failure[:max-retries] | always | unless-stopped
-RESTART_POLICY=always
-
-# If you do not want to wait to see it in action ;)
-POST_MEME_ON_STARTUP=
-
-# Full Slack web hook url
-# Ala: https://hooks.slack.com/services/SomeCode/AnotherCode/EvenLongerCode
-# See: https://api.slack.com/apps?new_app=1
-SLACK_WEBHOOK=
-
-# When to post the meme!
-# Confused? See: https://crontab.guru/
-# Default: Every friday at 16h
-POST_CRON=0 16 * * fri
-
-# ...and where to find them
-# Put some image files in there!
-MEMES_DIR=./memes
-
-# Need public hosting for the memes so Slack can download it
-HOST_URL=http://itenium.synology.me:4001/
-FILE_SERVER_PORT=4001
-```
-
-
-### Permissions
-
-If you get a 403 Forbidden:
+If you get a 403 Forbidden for `server:4001/cat.jpg`:
 
 ```sh
 chmod -R 755 memes_folder
 ```
 
 
-
-Output
-------
+## Output
 
 ![Example Slack output](example-slack-post.png "Example Slack output")
+
+
+## Resources
+
+- [Ofelia](https://github.com/mcuadros/ofelia): A docker job scheduler (aka. crontab for docker)
+- [Cron Docker Blog post](https://levelup.gitconnected.com/cron-docker-the-easiest-job-scheduler-youll-ever-create-e1753eb5ea44)
+  - [Source Code](https://github.com/erikbrgr/scheduler)

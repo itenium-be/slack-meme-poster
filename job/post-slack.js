@@ -8,7 +8,7 @@ const webhookUrl = process.env.SLACK_WEBHOOK
 // console.log(`Using webhook: ${webhookUrl}`)
 
 
-// Configure your message via
+// Configure your message via (super handy!)
 // https://app.slack.com/block-kit-builder/
 
 

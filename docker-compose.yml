@@ -2,7 +2,7 @@ version: "3"
 
 services:
   file_server:
-    container_name: slack-meme-file-server
+    container_name: meme-file-server
     image: halverneus/static-file-server
     restart: ${RESTART_POLICY}
     volumes:
@@ -17,8 +17,8 @@ services:
       DEBUG: 'false'
 
   cron_job:
-    container_name: slack-meme-job
-    image: slack-meme-job
+    container_name: meme-job
+    image: meme-job
     build: .
     restart: ${RESTART_POLICY}
     volumes:
