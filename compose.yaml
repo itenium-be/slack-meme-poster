@@ -28,5 +28,6 @@ services:
       HOST_URL: ${HOST_URL}
       POST_MEME_ON_STARTUP: ${POST_MEME_ON_STARTUP}
       POST_CRON: ${POST_CRON}
+      TZ: ${TZ}
     depends_on:
       - file_server
