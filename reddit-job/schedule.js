@@ -1,4 +1,3 @@
-// ai-job/schedule.js
 import { CronExpressionParser } from 'cron-parser'
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000

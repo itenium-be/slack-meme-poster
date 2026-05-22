@@ -1,5 +1,5 @@
 {
-  "name": "ai-meme-poster",
+  "name": "reddit-meme-poster",
   "version": "1.0.0",
   "description": "Post the top reddit meme since the last run",
   "type": "module",

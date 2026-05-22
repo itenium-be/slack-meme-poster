@@ -1,7 +1,7 @@
 Random Meme Poster
 ==================
 
-Node v16.
+Node v20.
 
 Cron job to post a randomly selected meme (any picture really) to a messaging app.  
 Images are moved to `already-sent` to avoid duplicate posting.
@@ -16,7 +16,6 @@ TODO:
 - Implement Discord
 - Also implement WhatsApp, ...
   - Use something that already supports all these integrations?
-- ~~Scrape reddit/programmingHumour and pick the "best" meme from the last week~~ → see "AI meme job" below
 
 
 
@@ -38,20 +37,10 @@ chmod -R 755 memes_folder
 ```
 
 
-## AI meme job
+## Reddit meme job
 
-A second, opt-in cron job posts the top-upvoted still-image from a subreddit,
+A second, opt-in cron job posts the top-upvoted from a subreddit,
 covering everything posted since its previous run. Configure in `.env`:
-
-| Var                  | Meaning                                              |
-|----------------------|------------------------------------------------------|
-| `AI_SUBREDDIT`       | Subreddit to scrape. **Empty = job disabled.**       |
-| `AI_POST_CRON`       | Cron schedule for the AI job.                         |
-| `AI_POST_ON_STARTUP` | Non-empty to also post once on container start.       |
-
-It downloads the winner as `YYYY-MM-DD.<ext>` into `memes/already-sent/` and
-posts it through the same Slack webhook. Videos and galleries are skipped (see
-the bot-token TODO for video support).
 
 
 ## Output

@@ -6,8 +6,8 @@ WORKDIR /usr/scheduler
 
 COPY start.sh ./
 COPY job/*.* ./job/
-COPY ai-job/*.* ./ai-job/
+COPY reddit-job/*.* ./reddit-job/
 
-RUN dos2unix start.sh job/*.* ai-job/*.*
+RUN dos2unix start.sh job/*.* reddit-job/*.*
 
 CMD ["./start.sh"]

@@ -11,9 +11,9 @@ fi
 cd ../
 
 
-cd ./ai-job
+cd ./reddit-job
 npm install
-if [ "$AI_POST_ON_STARTUP" ]; then
+if [ "$REDDIT_POST_ON_STARTUP" ]; then
   npm start
 fi
 cd ../
@@ -23,10 +23,10 @@ cd ../
 echo "Scheduling posting at: ${POST_CRON}"
 echo "${POST_CRON} node /usr/scheduler/job/meme-poster.js" > crontab.txt
 
-# Only schedule the AI job when a subreddit is configured.
-if [ "$AI_SUBREDDIT" ]; then
-  echo "Scheduling AI posting at: ${AI_POST_CRON}"
-  echo "${AI_POST_CRON} node /usr/scheduler/ai-job/index.js" >> crontab.txt
+# Only schedule the Reddit job when a subreddit is configured.
+if [ "$REDDIT_SUBREDDIT" ]; then
+  echo "Scheduling Reddit posting at: ${REDDIT_POST_CRON}"
+  echo "${REDDIT_POST_CRON} node /usr/scheduler/reddit-job/index.js" >> crontab.txt
 fi
 
 crontab crontab.txt

@@ -1,4 +1,3 @@
-// ai-job/index.js
 import fs from 'fs'
 import path from 'path'
 import { URL } from 'url'
@@ -31,9 +30,9 @@ async function downloadTo(imageUrl, destPath) {
 }
 
 async function main() {
-  const subreddit = process.env.AI_SUBREDDIT
+  const subreddit = process.env.REDDIT_SUBREDDIT
   if (!subreddit) {
-    console.error('AI_SUBREDDIT not set; nothing to do')
+    console.error('REDDIT_SUBREDDIT not set; nothing to do')
     process.exit(1)
   }
 
@@ -44,7 +43,7 @@ async function main() {
 
   const now = new Date()
   // TZ must match the cron's timezone so the window aligns with real fire times
-  const since = previousRun(process.env.AI_POST_CRON, now, process.env.TZ)
+  const since = previousRun(process.env.REDDIT_POST_CRON, now, process.env.TZ)
   const window = redditWindow(since, now)
   console.log(`r/${subreddit} top?t=${window} since ${since.toISOString()}`)
 

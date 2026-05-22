@@ -1,4 +1,3 @@
-// ai-job/reddit.js
 import fetch from 'node-fetch'
 
 const USER_AGENT = 'slack-meme-poster/1.0'

@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "ai-meme-poster",
+      "name": "reddit-meme-poster",
       "dependencies": {
         "cron-parser": "5.5.0",
         "node-fetch": "3.3.0",

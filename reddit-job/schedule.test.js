@@ -1,4 +1,3 @@
-// ai-job/schedule.test.js
 import { test, expect } from 'bun:test'
 import { previousRun, redditWindow } from './schedule.js'
 
