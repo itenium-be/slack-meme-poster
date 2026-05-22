@@ -134,7 +134,10 @@ Currently writes a single crontab line. Change to:
 
 ### `Dockerfile`
 
-Add `COPY ai-job/*.* ./ai-job/` and include `ai-job/*.*` in the `dos2unix` step.
+Bump the base image from `node:16-alpine` (EOL) to `node:20-alpine` —
+`cron-parser` v5 requires Node >= 18. The existing `job/` runs unchanged on the
+newer runtime. Add `COPY ai-job/*.* ./ai-job/` and include `ai-job/*.*` in the
+`dos2unix` step.
 
 ### Reddit User-Agent
 
@@ -155,8 +158,8 @@ Cron simply runs again on the next fire; no retry/backoff logic is added.
 
 ## Testing
 
-Per project TDD: unit tests with `bun test` cover the pure modules. The runtime
-in the container stays node:16; bun is used for the dev/test toolchain only.
+Per project TDD: unit tests with `bun test` cover the pure modules. The
+container runtime is node:20-alpine; bun is used for the dev/test toolchain only.
 
 - `select.test.js` — `pickMeme`:
   - picks the highest-score qualifying image,
