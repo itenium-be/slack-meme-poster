@@ -1,0 +1,15 @@
+{
+  "name": "ai-meme-poster",
+  "version": "1.0.0",
+  "description": "Post the top reddit meme since the last run",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "bun test"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "3.3.0",
+    "cron-parser": "5.5.0"
+  }
+}
