@@ -10,6 +10,16 @@ Images are moved to `already-sent` to avoid duplicate posting.
 Supported: Slack, Discord.
 
 
+TODO:
+- Use Slack Bot Token (with files:write and chat:write) instead (for video support)
+  - Use files.uploadV2 or files.getUploadURLExternal + files.completeUploadExternal
+- Implement Discord
+- Also implement WhatsApp, ...
+  - Use something that already supports all these integrations?
+- ~~Scrape reddit/programmingHumour and pick the "best" meme from the last week~~ → see "AI meme job" below
+
+
+
 ```sh
 # Configure Slack webhook etc
 cp .env.sample .env
@@ -26,6 +36,22 @@ If you get a 403 Forbidden for `server:4001/cat.jpg`:
 ```sh
 chmod -R 755 memes_folder
 ```
+
+
+## AI meme job
+
+A second, opt-in cron job posts the top-upvoted still-image from a subreddit,
+covering everything posted since its previous run. Configure in `.env`:
+
+| Var                  | Meaning                                              |
+|----------------------|------------------------------------------------------|
+| `AI_SUBREDDIT`       | Subreddit to scrape. **Empty = job disabled.**       |
+| `AI_POST_CRON`       | Cron schedule for the AI job.                         |
+| `AI_POST_ON_STARTUP` | Non-empty to also post once on container start.       |
+
+It downloads the winner as `YYYY-MM-DD.<ext>` into `memes/already-sent/` and
+posts it through the same Slack webhook. Videos and galleries are skipped (see
+the bot-token TODO for video support).
 
 
 ## Output
