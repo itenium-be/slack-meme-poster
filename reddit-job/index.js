@@ -5,18 +5,21 @@ import fetch from 'node-fetch'
 import { fetchTopPosts } from './reddit.js'
 import { pickMeme } from './select.js'
 import { previousRun, redditWindow } from './schedule.js'
+import { slugify } from './slug.js'
 import { postSlackMeme } from '../job/post-slack.js'
 
 const USER_AGENT = 'slack-meme-poster/1.0'
 const ALREADY_SENT = '/memes/already-sent'
 
-function targetFilename(imageUrl, now) {
+function targetFilename(imageUrl, now, title) {
   const ext = path.extname(new URL(imageUrl).pathname) || '.jpg'
   const date = now.toISOString().slice(0, 10) // YYYY-MM-DD
-  let filename = `${date}${ext}`
+  const slug = slugify(title)
+  const base = slug ? `${date}-${slug}` : date
+  let filename = `${base}${ext}`
   let n = 2
   while (fs.existsSync(path.join(ALREADY_SENT, filename))) {
-    filename = `${date}-${n}${ext}`
+    filename = `${base}-${n}${ext}`
     n++
   }
   return filename
@@ -62,7 +65,7 @@ async function main() {
   }
   console.log(`Picked "${winner.title}" (${winner.score} upvotes): ${winner.url}`)
 
-  const filename = targetFilename(winner.url, now)
+  const filename = targetFilename(winner.url, now, winner.title)
   try {
     await downloadTo(winner.url, path.join(ALREADY_SENT, filename))
   } catch (err) {
@@ -70,8 +73,12 @@ async function main() {
     process.exit(1)
   }
 
+  const redditUrl = 'https://www.reddit.com' + winner.permalink
   try {
-    await postSlackMeme(process.env.HOST_URL + 'already-sent/' + filename)
+    await postSlackMeme(process.env.HOST_URL + 'already-sent/' + filename, {
+      title: winner.title,
+      url: redditUrl,
+    })
   } catch (err) {
     console.error('Slack post failed:', err.message)
     process.exit(1)

@@ -12,6 +12,7 @@ function normalize(data) {
     postHint: data.post_hint,
     isVideo: data.is_video,
     over18: data.over_18,
+    permalink: data.permalink,
   }
 }
 
