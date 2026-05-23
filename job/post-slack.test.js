@@ -7,13 +7,32 @@ import {
   buildMemeBlocks,
 } from './post-slack.js'
 
-test('HEADERS contains the curated five lines', () => {
+test('HEADERS is the curated pool', () => {
   expect(HEADERS).toEqual([
     'git commit -m "meme" ✅',
     "Stop the build — it's meme o'clock 🕒",
     'Fresh meme incoming! 🚀',
     'A wild meme appeared! ✨',
     'Hot off the press 📰',
+    'sudo deliver-meme --force ⚡',
+    'Merging meme into main… ✅',
+    'It compiled. Send meme. 📤',
+    'cat /dev/memes 🐱',
+    'Rollback canceled — meme detected 🎯',
+    'One does not simply skip the meme 🧙‍♂️',
+    'A wild *new* meme appeared! ✨',
+    "99 problems, this meme isn't one 🎵",
+    "It's dangerous to go alone — take this meme 🗡️",
+    'Behold 👀',
+    '🥁 *drumroll* 🥁',
+    'Brace for impact! 💥',
+    'O(1) meme delivery ⚡',
+    'Refactored: now with 100% more meme 💯',
+    'Patch notes: +1 meme 🩹',
+    'Build passed: deploying meme 🟢',
+    'Trained on memes since 2007 📚',
+    'Powered by caffeine and despair ☕🖤',
+    "This meeting could've been a meme 📅",
   ])
 })
 
