@@ -4,7 +4,8 @@
   "description": "Post a random meme to x every y",
   "type": "module",
   "scripts": {
-    "start": "node meme-poster.js"
+    "start": "node meme-poster.js",
+    "test": "bun test"
   },
   "author": "",
   "license": "MIT",
