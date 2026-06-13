@@ -5,14 +5,12 @@ Node v20.
 
 Cron job to post a randomly selected meme (any picture really) to a messaging app.  
 Images are moved to `already-sent` to avoid duplicate posting.
-`halverneus/static-file-server` is used to publicly share the `memes` folder for Slack to download.
+A Slack bot uploads each image directly (`files.uploadV2`) — no public file server needed.
 
 Supported: Slack, Discord.
 
 
 TODO:
-- Use Slack Bot Token (with files:write and chat:write) instead (for video support)
-  - Use files.uploadV2 or files.getUploadURLExternal + files.completeUploadExternal
 - Implement Discord
 - Also implement WhatsApp, ...
   - Use something that already supports all these integrations?
