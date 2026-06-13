@@ -7,10 +7,15 @@ services:
     volumes:
       # MEMES_DIR is the host path (per-tier, set in Coolify): the NFS-mounted Dropbox folder.
       - ${MEMES_DIR}:/memes
-    # Per-tier NON-secret config, committed in the repo. TIER (dev|prod) is set per Coolify
-    # resource so the compose stays identical on every branch.
-    env_file:
-      - deploy/${TIER}.env
     environment:
-      # The only secret — set per resource in Coolify (never committed).
+      # Set per resource in Coolify. SLACK_BOT_TOKEN is the only secret; TIER (dev|prod)
+      # picks which committed deploy/<tier>.env start.sh sources for the rest of the config.
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
+      TIER: ${TIER}
+    # Worker has no HTTP port — liveness is "is cron running?".
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep crond || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
