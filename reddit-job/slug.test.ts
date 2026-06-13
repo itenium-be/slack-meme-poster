@@ -1,5 +1,5 @@
 import { test, expect } from 'bun:test'
-import { slugify } from './slug.js'
+import { slugify } from './slug'
 
 test('slugify: normal title becomes lowercase kebab', () => {
   expect(slugify('When The Code Finally Works')).toBe('when-the-code-finally-works')

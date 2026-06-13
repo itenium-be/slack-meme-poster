@@ -1,32 +1,33 @@
 #!/bin/bash
 
-echo "Node: $(node -v)"
+echo "Bun: $(bun --version)"
+BUN="$(command -v bun)"
 
 
 cd ./job
-npm install
+bun install
 if [ "$POST_MEME_ON_STARTUP" ]; then
-  npm start
+  bun run start
 fi
 cd ../
 
 
 cd ./reddit-job
-npm install
+bun install
 if [ "$REDDIT_POST_ON_STARTUP" ]; then
-  npm start
+  bun run start
 fi
 cd ../
 
 
 # POST_CRON='0 16 * * fri'
 echo "Scheduling posting at: ${POST_CRON}"
-echo "${POST_CRON} node /usr/scheduler/job/meme-poster.js" > crontab.txt
+echo "${POST_CRON} ${BUN} /usr/scheduler/job/meme-poster.ts" > crontab.txt
 
 # Only schedule the Reddit job when a subreddit is configured.
 if [ "$REDDIT_SUBREDDIT" ]; then
   echo "Scheduling Reddit posting at: ${REDDIT_POST_CRON}"
-  echo "${REDDIT_POST_CRON} node /usr/scheduler/reddit-job/index.js" >> crontab.txt
+  echo "${REDDIT_POST_CRON} ${BUN} /usr/scheduler/reddit-job/index.ts" >> crontab.txt
 fi
 
 crontab crontab.txt

@@ -1,4 +1,4 @@
-import { postSlackMeme } from './post-slack.js'
+import { postSlackMeme } from './post-slack'
 import fs from 'fs'
 
 

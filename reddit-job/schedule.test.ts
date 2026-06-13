@@ -1,5 +1,5 @@
 import { test, expect } from 'bun:test'
-import { previousRun, redditWindow } from './schedule.js'
+import { previousRun, redditWindow } from './schedule'
 
 // Weekly cron: Fridays 16:00. Run "now" is Fri 2026-05-22 16:00:05 UTC.
 const NOW = new Date('2026-05-22T16:00:05Z')
@@ -17,7 +17,7 @@ test('previousRun: falls back to now-7d on unparseable cron', () => {
 })
 
 test('redditWindow: maps gap size to reddit t value', () => {
-  const h = (n) => new Date(NOW.getTime() - n * 3600 * 1000)
+  const h = (n: number) => new Date(NOW.getTime() - n * 3600 * 1000)
   expect(redditWindow(h(0.5), NOW)).toBe('hour')
   expect(redditWindow(h(20), NOW)).toBe('day')
   expect(redditWindow(h(24 * 6), NOW)).toBe('week')
@@ -26,7 +26,7 @@ test('redditWindow: maps gap size to reddit t value', () => {
 })
 
 test('redditWindow: boundaries are inclusive of the lower bucket (<=)', () => {
-  const h = (n) => new Date(NOW.getTime() - n * 3600 * 1000)
+  const h = (n: number) => new Date(NOW.getTime() - n * 3600 * 1000)
   expect(redditWindow(h(1), NOW)).toBe('hour')
   expect(redditWindow(h(1.0001), NOW)).toBe('day')
   expect(redditWindow(h(24), NOW)).toBe('day')

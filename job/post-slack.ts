@@ -3,7 +3,12 @@ import { WebClient } from '@slack/web-api'
 
 // Configure messages via https://app.slack.com/block-kit-builder/
 
-export const HEADERS = [
+export interface Meta {
+  title: string
+  url: string
+}
+
+export const HEADERS: string[] = [
   'git commit -m "meme" ✅',
   "Stop the build — it's meme o'clock 🕒",
   'Fresh meme incoming! 🚀',
@@ -30,13 +35,13 @@ export const HEADERS = [
   "This meeting could've been a meme 📅",
 ]
 
-export function pickHeader() {
+export function pickHeader(): string {
   return HEADERS[Math.floor(Math.random() * HEADERS.length)]
 }
 
 // Reddit titles can contain `<`, `>`, `&`, which would break the <url|text>
 // link syntax of Slack mrkdwn. Escape them, leave everything else alone.
-export function escapeMrkdwn(text) {
+export function escapeMrkdwn(text: string): string {
   return String(text)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -45,7 +50,7 @@ export function escapeMrkdwn(text) {
 
 // The text shown above the uploaded file (Slack `initial_comment`, mrkdwn).
 // meta.url is not escaped: reddit canonical URLs never contain `|` or `>`.
-export function buildComment(headerText, meta) {
+export function buildComment(headerText: string, meta?: Meta): string {
   if (!meta) return headerText
   return `${headerText}\n🔗 *<${meta.url}|${escapeMrkdwn(meta.title)}>*`
 }
@@ -53,12 +58,12 @@ export function buildComment(headerText, meta) {
 const client = new WebClient(process.env.SLACK_BOT_TOKEN)
 const channel = process.env.SLACK_CHANNEL_ID
 
-export async function postSlackMeme(filePath, meta) {
+export async function postSlackMeme(filePath: string, meta?: Meta): Promise<void> {
   const fileName = filePath.substring(filePath.lastIndexOf('/') + 1)
   console.log('About to upload meme:', fileName)
 
   await client.files.uploadV2({
-    channel_id: channel,
+    channel_id: channel!,
     file: fs.readFileSync(filePath),
     filename: fileName,
     initial_comment: buildComment(pickHeader(), meta),

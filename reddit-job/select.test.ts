@@ -1,11 +1,17 @@
 import { test, expect } from 'bun:test'
-import { isImagePost, pickMeme } from './select.js'
+import { isImagePost, pickMeme } from './select'
+import type { RedditPost } from './reddit'
 
 const SINCE = new Date('2025-05-15T00:00:00Z') // epoch s = 1747267200
 const after = 1747353600  // 2025-05-16
 const before = 1747180800 // 2025-05-14
 
-const img = (over) => ({ id: 'a', title: 't', score: 10, url: 'https://i.redd.it/a.jpg', createdUtc: after, postHint: 'image', isVideo: false, over18: false, ...over })
+const img = (over: Partial<RedditPost> = {}): RedditPost => ({
+  id: 'a', title: 't', score: 10, url: 'https://i.redd.it/a.jpg',
+  createdUtc: after, postHint: 'image', isVideo: false, over18: false,
+  permalink: '/r/test/a/',
+  ...over,
+})
 
 test('isImagePost: true for image post_hint', () => {
   expect(isImagePost(img())).toBe(true)
@@ -33,7 +39,7 @@ test('pickMeme: returns highest score among eligible images', () => {
     img({ id: 'high', score: 99 }),
     img({ id: 'vid', score: 500, isVideo: true }),
   ]
-  expect(pickMeme(posts, SINCE).id).toBe('high')
+  expect(pickMeme(posts, SINCE)!.id).toBe('high')
 })
 
 test('pickMeme: excludes posts created on/before sinceUtc', () => {

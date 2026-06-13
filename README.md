@@ -1,7 +1,7 @@
 Random Meme Poster
 ==================
 
-Node v20.
+Bun (TypeScript).
 
 Cron job to post a randomly selected meme (any picture really) to a messaging app.  
 Images are moved to `already-sent` to avoid duplicate posting.

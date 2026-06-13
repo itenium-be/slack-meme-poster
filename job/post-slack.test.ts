@@ -1,11 +1,11 @@
-// job/post-slack.test.js
+// job/post-slack.test.ts
 import { test, expect } from 'bun:test'
 import {
   HEADERS,
   pickHeader,
   escapeMrkdwn,
   buildComment,
-} from './post-slack.js'
+} from './post-slack'
 
 test('HEADERS is the curated pool', () => {
   expect(HEADERS).toEqual([
