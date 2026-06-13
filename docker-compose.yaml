@@ -3,15 +3,14 @@ services:
     container_name: meme-job
     image: meme-job
     build: .
-    restart: ${RESTART_POLICY}
+    restart: always
     volumes:
+      # MEMES_DIR is the host path (per-tier, set in Coolify): the NFS-mounted Dropbox folder.
       - ${MEMES_DIR}:/memes
+    # Per-tier NON-secret config, committed in the repo. TIER (dev|prod) is set per Coolify
+    # resource so the compose stays identical on every branch.
+    env_file:
+      - deploy/${TIER}.env
     environment:
+      # The only secret — set per resource in Coolify (never committed).
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
-      SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID}
-      POST_MEME_ON_STARTUP: ${POST_MEME_ON_STARTUP}
-      POST_CRON: ${POST_CRON}
-      REDDIT_SUBREDDIT: ${REDDIT_SUBREDDIT}
-      REDDIT_POST_CRON: ${REDDIT_POST_CRON}
-      REDDIT_POST_ON_STARTUP: ${REDDIT_POST_ON_STARTUP}
-      TZ: ${TZ}
