@@ -4,9 +4,9 @@ services:
     image: meme-job
     build: .
     restart: always
-    volumes:
-      # MEMES_DIR is the host path (per-tier, set in Coolify): the NFS-mounted Dropbox folder.
-      - ${MEMES_DIR}:/memes
+    # The memes folder is bind-mounted to /memes via Coolify "Persistent Storage"
+    # (per resource → the tier's NFS-mounted Dropbox path). NOT a compose volume:
+    # Coolify doesn't interpolate ${VAR} in `volumes:` and would make a named volume.
     environment:
       # Set per resource in Coolify. SLACK_BOT_TOKEN is the only secret; TIER (dev|prod)
       # picks which committed deploy/<tier>.env start.sh sources for the rest of the config.
