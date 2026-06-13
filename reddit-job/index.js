@@ -39,11 +39,6 @@ async function main() {
     process.exit(1)
   }
 
-  if (!process.env.HOST_URL) {
-    console.error('HOST_URL not set; cannot build a public image url')
-    process.exit(1)
-  }
-
   const now = new Date()
   // TZ must match the cron's timezone so the window aligns with real fire times
   const since = previousRun(process.env.REDDIT_POST_CRON, now, process.env.TZ)
@@ -75,7 +70,7 @@ async function main() {
 
   const redditUrl = 'https://www.reddit.com' + winner.permalink
   try {
-    await postSlackMeme(process.env.HOST_URL + 'already-sent/' + filename, {
+    await postSlackMeme(path.join(ALREADY_SENT, filename), {
       title: winner.title,
       url: redditUrl,
     })
