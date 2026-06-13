@@ -1,4 +1,5 @@
-import fetch from 'node-fetch'
+import fs from 'fs'
+import { WebClient } from '@slack/web-api'
 
 // Configure messages via https://app.slack.com/block-kit-builder/
 
@@ -42,46 +43,24 @@ export function escapeMrkdwn(text) {
     .replace(/>/g, '&gt;')
 }
 
-export function buildMemeBlocks(imageUrl, headerText, meta) {
-  const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
-  const blocks = [
-    {
-      type: 'header',
-      text: { type: 'plain_text', text: headerText },
-    },
-  ]
-  if (meta) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        // meta.url is not escaped: Reddit canonical URLs never contain `|` or `>`.
-        text: `🔗 *<${meta.url}|${escapeMrkdwn(meta.title)}>*`,
-      },
-    })
-  }
-  blocks.push({
-    type: 'image',
-    title: { type: 'plain_text', text: fileName, emoji: true },
-    image_url: imageUrl,
-    alt_text: fileName,
-  })
-  return blocks
+// The text shown above the uploaded file (Slack `initial_comment`, mrkdwn).
+// meta.url is not escaped: reddit canonical URLs never contain `|` or `>`.
+export function buildComment(headerText, meta) {
+  if (!meta) return headerText
+  return `${headerText}\n🔗 *<${meta.url}|${escapeMrkdwn(meta.title)}>*`
 }
 
-const webhookUrl = process.env.SLACK_WEBHOOK
+const client = new WebClient(process.env.SLACK_BOT_TOKEN)
+const channel = process.env.SLACK_CHANNEL_ID
 
-export async function postSlackMeme(imageUrl, meta) {
-  const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
-  console.log('About to post meme:', fileName)
-  console.log('Full url:', imageUrl)
+export async function postSlackMeme(filePath, meta) {
+  const fileName = filePath.substring(filePath.lastIndexOf('/') + 1)
+  console.log('About to upload meme:', fileName)
 
-  await fetch(webhookUrl, {
-    method: 'POST',
-    body: JSON.stringify({ blocks: buildMemeBlocks(imageUrl, pickHeader(), meta) }),
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
+  await client.files.uploadV2({
+    channel_id: channel,
+    file: fs.readFileSync(filePath),
+    filename: fileName,
+    initial_comment: buildComment(pickHeader(), meta),
   })
 }

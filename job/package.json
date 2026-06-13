@@ -10,6 +10,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "3.3.0"
+    "@slack/web-api": "^7.17.0"
   }
 }
