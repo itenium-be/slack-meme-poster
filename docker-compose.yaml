@@ -4,14 +4,18 @@ services:
     image: meme-job
     build: .
     restart: always
-    # The memes folder is bind-mounted to /memes via Coolify "Persistent Storage"
-    # (per resource → the tier's NFS-mounted Dropbox path). NOT a compose volume:
-    # Coolify doesn't interpolate ${VAR} in `volumes:` and would make a named volume.
+    volumes:
+      # Coolify can't manage compose volumes from the UI and won't interpolate ${VAR}
+      # here, so bind a LITERAL fixed parent — identical for every tier. The app reads
+      # its tier's subdir from MEMES_DIR (a /funny/... container path, set per resource).
+      - /mnt/dropbox/Archive/Funny:/funny
     environment:
       # Set per resource in Coolify. SLACK_BOT_TOKEN is the only secret; TIER (dev|prod)
-      # picks which committed deploy/<tier>.env start.sh sources for the rest of the config.
+      # picks the committed deploy/<tier>.env start.sh sources; MEMES_DIR is the tier's
+      # memes folder inside the container, e.g. /funny/Programming-Dev.
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
       TIER: ${TIER}
+      MEMES_DIR: ${MEMES_DIR}
     # Worker has no HTTP port — liveness is "is cron running?".
     healthcheck:
       test: ["CMD-SHELL", "pgrep crond || exit 1"]

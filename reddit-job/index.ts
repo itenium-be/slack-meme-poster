@@ -9,7 +9,7 @@ import { slugify } from './slug'
 import { postSlackMeme } from '../job/post-slack'
 
 const USER_AGENT = 'slack-meme-poster/1.0'
-const ALREADY_SENT = '/memes/already-sent'
+const ALREADY_SENT = `${process.env.MEMES_DIR ?? '/memes'}/already-sent`
 
 function targetFilename(imageUrl: string, now: Date, title: string): string {
   const ext = path.extname(new URL(imageUrl).pathname) || '.jpg'
