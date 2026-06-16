@@ -22,9 +22,3 @@ covering everything posted since its previous run. Configure in `.env`.
 ## Output
 
 ![Example Slack output](example-slack-post.png "Example Slack output")
-
-
-## Resources
-
-- [Cron Docker Blog post](https://levelup.gitconnected.com/cron-docker-the-easiest-job-scheduler-youll-ever-create-e1753eb5ea44)
-  - [Source Code](https://github.com/erikbrgr/scheduler)
