@@ -10,12 +10,17 @@ services:
       # its tier's subdir from MEMES_DIR (a /funny/... container path, set per resource).
       - /mnt/dropbox/Archive/Funny:/funny
     environment:
-      # Set per resource in Coolify. SLACK_BOT_TOKEN is the only secret; TIER (dev|prod)
-      # picks the committed deploy/<tier>.env start.sh sources; MEMES_DIR is the tier's
-      # memes folder inside the container, e.g. /funny/Programming-Dev.
+      # Every value is injected by Coolify (from the central coolify-apps.ts manifest) or,
+      # for local runs, from .env. The container is tier-unaware — it just reads these keys.
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
-      TIER: ${TIER}
+      SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID}
       MEMES_DIR: ${MEMES_DIR}
+      TZ: ${TZ}
+      POST_CRON: ${POST_CRON}
+      POST_MEME_ON_STARTUP: ${POST_MEME_ON_STARTUP:-}
+      REDDIT_SUBREDDIT: ${REDDIT_SUBREDDIT:-}
+      REDDIT_POST_CRON: ${REDDIT_POST_CRON:-}
+      REDDIT_POST_ON_STARTUP: ${REDDIT_POST_ON_STARTUP:-}
     # Worker has no HTTP port — liveness is "is cron running?".
     healthcheck:
       test: ["CMD-SHELL", "pgrep crond || exit 1"]

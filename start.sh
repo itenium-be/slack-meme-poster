@@ -3,18 +3,6 @@
 echo "Bun: $(bun --version)"
 BUN="$(command -v bun)"
 
-# Load committed non-secret config for this tier. TIER (dev|prod) + the secret
-# SLACK_BOT_TOKEN come from the container env (set per Coolify resource). We source
-# the file ourselves rather than rely on compose `env_file`, which Coolify doesn't
-# honor for repo files. `set -a` exports everything so cron-fired jobs inherit it too.
-if [ -f "./deploy/${TIER}.env" ]; then
-  echo "Loading config: deploy/${TIER}.env"
-  set -a
-  . "./deploy/${TIER}.env"
-  set +a
-else
-  echo "WARNING: deploy/${TIER}.env not found (TIER='${TIER}') — no config loaded"
-fi
 
 
 cd ./job
