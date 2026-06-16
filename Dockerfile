@@ -1,6 +1,5 @@
 FROM oven/bun:1-alpine
 
-# bash for start.sh; dos2unix because the repo lives on Dropbox/Windows (CRLF). crond is busybox (alpine).
 RUN apk add --update --no-cache bash dos2unix
 
 WORKDIR /usr/scheduler
@@ -11,5 +10,7 @@ COPY reddit-job/*.* ./reddit-job/
 
 RUN dos2unix start.sh job/*.* reddit-job/*.*
 
-# Run via bash (start.sh's exec bit isn't preserved on Dropbox/Windows).
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 --start-period=90s \
+  CMD pgrep crond || exit 1
+
 CMD ["bash", "start.sh"]

@@ -5,9 +5,6 @@ services:
     build: .
     restart: always
     volumes:
-      # Local dev only. On Coolify (dockerfile build pack) the /memes bind is supplied
-      # per-resource via the storages API — see homelab coolify-apps.ts mountsByTier;
-      # Coolify ignores this compose file. Defaults to the repo's sample memes/.
       - ${MEMES_DIR:-./memes}:/memes
     environment:
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
@@ -19,9 +16,3 @@ services:
       REDDIT_SUBREDDIT: ${REDDIT_SUBREDDIT:-}
       REDDIT_POST_CRON: ${REDDIT_POST_CRON:-}
       REDDIT_POST_ON_STARTUP: ${REDDIT_POST_ON_STARTUP:-}
-    healthcheck:
-      test: ["CMD-SHELL", "pgrep crond || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 90s
