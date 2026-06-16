@@ -3,18 +3,8 @@ Random Meme Poster
 
 Bun (TypeScript).
 
-Cron job to post a randomly selected meme (any picture really) to a messaging app.  
+Cron job to post a randomly selected meme (any picture really) to Slack.  
 Images are moved to `already-sent` to avoid duplicate posting.
-A Slack bot uploads each image directly (`files.uploadV2`) — no public file server needed.
-
-Supported: Slack, Discord.
-
-
-TODO:
-- Implement Discord
-- Also implement WhatsApp, ...
-  - Use something that already supports all these integrations?
-
 
 
 ```sh
