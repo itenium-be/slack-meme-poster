@@ -5,7 +5,7 @@ services:
     build: .
     restart: always
     volumes:
-      - ${MEMES_HOST_DIR}:/funny
+      - /mnt/dropbox/Archive/Funny:/funny
     environment:
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
       SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID}
