@@ -5,13 +5,8 @@ services:
     build: .
     restart: always
     volumes:
-      # Coolify can't manage compose volumes from the UI and won't interpolate ${VAR}
-      # here, so bind a LITERAL fixed parent — identical for every tier. The app reads
-      # its tier's subdir from MEMES_DIR (a /funny/... container path, set per resource).
-      - /mnt/dropbox/Archive/Funny:/funny
+      - ${MEMES_HOST_DIR}:/funny
     environment:
-      # Every value is injected by Coolify (from the central coolify-apps.ts manifest) or,
-      # for local runs, from .env. The container is tier-unaware — it just reads these keys.
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
       SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID}
       MEMES_DIR: ${MEMES_DIR}
@@ -21,7 +16,6 @@ services:
       REDDIT_SUBREDDIT: ${REDDIT_SUBREDDIT:-}
       REDDIT_POST_CRON: ${REDDIT_POST_CRON:-}
       REDDIT_POST_ON_STARTUP: ${REDDIT_POST_ON_STARTUP:-}
-    # Worker has no HTTP port — liveness is "is cron running?".
     healthcheck:
       test: ["CMD-SHELL", "pgrep crond || exit 1"]
       interval: 30s
