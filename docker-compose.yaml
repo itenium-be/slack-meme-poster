@@ -4,10 +4,11 @@ services:
     image: meme-job
     build: .
     restart: always
-    # No host volume here: Coolify can't interpolate ${VAR} in volumes, so the /funny bind is
-    # declared in the homelab coolify-apps.ts manifest and pushed per-resource via the storages
-    # API (host path stays out of this repo). For a local Docker run, add a docker-compose
-    # .override.yml with `volumes: ["./memes:/funny"]`, or just run `bun job/meme-poster.ts`.
+    volumes:
+      # Local dev only. On Coolify (dockerfile build pack) the /memes bind is supplied
+      # per-resource via the storages API — see homelab coolify-apps.ts mountsByTier;
+      # Coolify ignores this compose file. Defaults to the repo's sample memes/.
+      - ${MEMES_DIR:-./memes}:/memes
     environment:
       SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
       SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID}
